@@ -20,6 +20,7 @@ const Cadastro = (props) => {
                     <div className="campos_cadastro">
                         <div className="campo_cad_titulo">
                             <label htmlFor="titulo"></label>
+                            <input type="text" name="Nome" placeholder={`${props.namePlace}`}/>
                             <input type="text" name="nome" placeholder={`${props.namePlace}`}/>
                         </div>
 

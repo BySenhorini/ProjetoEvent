@@ -1,3 +1,14 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* Impede rolagem */
+}
+
+body {
+  border: none; /* Removendo valor vazio */
+}
+
 .login-container {
   display: flex;
   height: 100vh;
@@ -6,11 +17,12 @@
 
 .banner_event {
   flex: 1;
-  background-color: #B51D44;
   background-image: url('../../assets/img/portaBranca.png');
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
+  background-size: contain;;
+  background-color: #B51D44;
+
 }
 
 .section-login {
@@ -26,7 +38,7 @@
 .logo-event {
   width: 200px;
   margin-bottom: 60px;
-  
+
 }
 
 .form-login {
@@ -52,6 +64,13 @@
   width: 336px;
   border-bottom: 2px solid black;
   outline: none;
+  height: 30px;
+  padding: 0 10px;
+  margin-top: 7px;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  box-shadow: 1px 4px 4px 0px #00000045; 
 }
 
 .forgot-password {
