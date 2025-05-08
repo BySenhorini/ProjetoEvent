@@ -1,68 +1,67 @@
 .login-container {
-    display: flex;
-    height: 100vh;
-    font-family: sans-serif;
-  }
-  
-  .banner_event {
-    flex: 1;
-    background-color: #B51D44;
-    background-image: url('../../assets/img/portaBranca.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-  }
-  
-  .section-login {
-    flex: 1;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
-  }
-  
-  .logo-event {
-    width: 200px;
-    margin-bottom: 60px;
-    
-  }
-  
-  .form-login {
-    width: 100%;
-    max-width: 300px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .form-group {
+  display: flex;
+  height: 100vh;
+  font-family: sans-serif;
+}
 
-    flex-direction: column;
-  }
-  
-  .form-group label {
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #B4A9A9;
-  }
-  
-  .form-group input {
-    width: 336px;
-    border-bottom: 2px solid black;
-    outline: none;
-  }
+.banner_event {
+  flex: 1;
+  background-color: #B51D44;
+  background-image: url('../../assets/img/portaBranca.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
 
-  .forgot-password {
-    text-align: right;
-    font-size: 12px;
-  }
+.section-login {
+  flex: 1;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.logo-event {
+  width: 200px;
+  margin-bottom: 60px;
   
-  .forgot-password a {
-    text-decoration: none;
-    color: #A6A0A0;
-    display: flex;
-    justify-content: space-around;
-  }
-  
+}
+
+.form-login {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #B4A9A9;
+}
+
+.form-group input {
+  width: 336px;
+  border-bottom: 2px solid black;
+  outline: none;
+}
+
+.forgot-password {
+  text-align: right;
+  font-size: 12px;
+}
+
+.forgot-password a {
+  text-decoration: none;
+  color: #A6A0A0;
+  display: flex;
+  justify-content: space-around;
+}

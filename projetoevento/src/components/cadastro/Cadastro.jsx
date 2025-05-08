@@ -1,33 +1,34 @@
-import './Cadastro.css'; // ✅ correto
-import Imagem from "../../assets/img/cadastroDeEvento.png";
+import "./Cadastro.css";
 import Botao from "../botao/Botao";
+import Imagem from '../Imagem/Imagem';
 
 const Cadastro = (props) => {
-  return (
-    <section className="section_cadastro">
-      <form className="layout_grid form_cadastro">
-        <h2>{props.tituloCadastro}</h2>
+    return (
+      <main className="layout_grid main_cadastro">
+          <form action="" className="layout_grid form_cadastro">
+            <div className="titulo">
+                    <h1>{props.tituloCadastro}</h1>
+                    <hr/>
+                </div>
 
-        <div className="cadastro-conteudo">
-          <img
-            src={Imagem}
-            alt="imagem do cadastro tipo evento"
-            className="logo_tipoEvento"
-          />
+            <section className="layout_grid section_cadastro">
+                    <div className="banner_cadastro">
+                    <Imagem imagem={props.imagem} alt="Banner do cadastro" />
+                    </div>
 
-          <div className="campos_cadastros">
-            <div className="campo-cad_nome">
-              <label htmlFor="nome" className="titulo">Título</label>
-              <hr className="linha-entre-campos" />
-              <input type="text" name="nome" />
-            </div>
+            
+                    <div className="campos_cadastro">
+                        <div className="campo_cad_titulo">
+                            <label htmlFor="titulo"></label>
+                            <input type="text" name="nome" placeholder={`${props.namePlace}`}/>
+                        </div>
 
-            <Botao nomeDoBotao="Cadastrar" />
-          </div>
-        </div>
-      </form>
-    </section>
-  );
-};
+                        <Botao nomeDoBotao="Cadastrar"/>
+                    </div>
+            </section>
+                </form>
+        </main>
+    )
+}
 
 export default Cadastro;

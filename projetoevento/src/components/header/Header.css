@@ -1,26 +1,28 @@
 header{
-    background-color: #ffffff;
-    height: 75px;
-    box-shadow: 1px 4px 4px 0px #00000055;
-    position: relative;
+    height: 80px;
+    box-shadow: 1px 4px 4px 0px #00000030;
 }
-
-.cabecalho{
+.inicio{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
-    width: 100%;
-    margin-top: 40px
 }
 
-.cabecalho img{
-    height: 35px;
-}
-
-.link_header{
-    margin-left: 55px;
-    color: #201849;
+.link-header{
+    margin-left:65px ;
+    margin-right: 5px;
     text-decoration: none;
+    color: #1f1848;
+
+    font-family: "poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.navas_header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
 }
 
 @media screen and (max-width: 768px) {
