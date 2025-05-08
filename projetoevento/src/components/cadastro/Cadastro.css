@@ -1,0 +1,105 @@
+.section_cadastro {
+    background-color: #fdfdfd;
+    color: rgb(0, 0, 0);
+    padding: 50px 0;
+    height: 400px;
+}
+
+.form_cadastro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form_cadastro h2 {
+    text-transform: uppercase;
+}
+
+.form_cadastro hr {
+    width: 100%;
+    margin-top: 7px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #000000;
+}
+
+.titulo{
+   color: #B4A9A9;
+}
+
+hr {
+    border: 1px solid #000;
+
+    margin-top: 10px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.cadastro-conteudo {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    margin-top: 60px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+.campos_cadastros {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.campo-cad_nome input {
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    padding: 0 3px;
+    width: 280px;
+    height: 25px;
+}
+
+.campo-cad_nome {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Botão personalizado */
+button {
+    background-color: #e0e0e0;
+    color: #444;
+    font-weight: bold;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+
+.linha-entre-campos {
+    border: 1px solid #000;
+    margin: 10px 0 20px 0; 
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .cadastro-conteudo {
+        flex-direction: column;
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .campo-cad_nome input {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .logo_tipoEvento {
+        max-width: 250px;
+        width: 100%;
+    }
+}
