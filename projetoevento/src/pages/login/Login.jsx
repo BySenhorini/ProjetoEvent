@@ -12,12 +12,12 @@ const Login = () => {
 
         <form className="form-login">
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">Nome</label>
             <input className="user" type="email" id="username" name="username"/>
           </div>
 
           <div className="form-group">
-            <label htmlFor="senha">Password</label>
+            <label htmlFor="senha">Senha</label>
             <input className="senhaInput" type="password" id="senha" name="senha"/>
           </div>
 
