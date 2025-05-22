@@ -1,25 +1,25 @@
 import "./Header.css";
 import Logo from "../../assets/img/logo1.svg"
-import admin from "../../assets/img/lixo.png"
+import ADM from "../../assets/img/lixo.png"
 const Header = () => {
-    return(
+    return (
         <header>
             <link rel="stylesheet" href="https://use.typekit.net/pam4ubo.css"></link>
-            <div className="layout_grid inicio">
 
-            <img src={Logo} alt=""/>
-            <nav className="nav_header">
-                <a href="" className="link-header">Home</a>
-                <a href="" className="link-header">Eventos</a>
-                <a href="" className="link-header">Usuários</a>
-                <a href="" className="link-header">Contatos</a>
-            </nav>
-
-            <nav className="navas_header">
-                <a href="" className="link-header">Administrador</a>
-                <img src={admin} alt=""/>
-            </nav>
-
+            <div className="layout_grid header_header">
+                <img className="login_img" src={Logo} alt="" />
+                <nav className="nav_header">
+                    <a href="" className="link_header">Home</a>
+                    <a href="" className="link_header">Eventos</a>
+                    <a href="" className="link_header">Usuários</a>
+                    <a href="" className="link_header">Contatos</a>
+                </nav>
+                <nav className="navs_header">
+                    <div className="adm_info">
+                        <a href="#" className="link_header">Administrador</a>
+                        <img src={ADM} alt="Foto do administrador" />
+                    </div>
+                </nav>
             </div>
         </header>
     )

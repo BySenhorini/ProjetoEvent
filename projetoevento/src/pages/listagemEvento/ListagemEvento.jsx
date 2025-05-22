@@ -2,7 +2,7 @@ import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import Cadastro from "../../components/cadastro/Cadastro";
 import Lista from "../../components/lista/Lista";
-import Imagem from "../../assets/img/cadastroDeEvento.png";
+import imagemListarEvento from "../../assets/img/cadastroDeEvento.png";
 
 
 const ListagemEvento = () => {
@@ -11,13 +11,18 @@ const ListagemEvento = () => {
             <Header />
             <main>
                 <Cadastro
-                    imagem={Imagem}
-                    tituloCadastro="Cadastro de Evento"
-                    namePlace="Nome"
-                />
+                    nametitulo="Tipo Evento"
+                    imagem={imagemListarEvento}
+                    titulo_cadastro="Cadastro de Evento"
+                    nome="Nome"
+                    exibir_tipo_evento={true} />
+
                 <Lista
-                    tituloItemLista="Nome"
-                    tituloLista="Lista de Evento"
+                    nome_titulo="Tipo Evento"
+                    titulo_item_lista="Nome"
+                    titulo_item_lista2="Tipo Evento"
+                    titulo_lista="Lista de Evento"
+                    visibilidade="none"
                 />
             </main>
             <Footer />

@@ -11,13 +11,14 @@ const CadastroTipoGenero = () => {
       <main>
         <Cadastro
           imagem={imagemTipoUsuario} 
-          tituloCadastro="Cadastro Tipo de Usuário"
-          namePlace="Título"
+          titulo_cadastro="Cadastro Tipo de Usuário"
+          nome="Título"
         />
 
         <Lista
-          tituloItemLista="Tipo Usuário"
-          tituloLista="Lista De Tipo Usuário"
+          titulo_item_lista="Tipo Usuário"
+          titulo_lista="Lista De Tipo Usuário"
+           visibilidade="none"
         />
       </main>
       <Footer />

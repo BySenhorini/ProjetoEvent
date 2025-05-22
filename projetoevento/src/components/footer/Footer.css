@@ -1,3 +1,7 @@
+body {
+    font-family: "Poppins", sans-serif; 
+  }
+
 footer{
     background-color:#FFFFFF ;
     color: black;
@@ -6,5 +10,14 @@ footer{
     align-items: center;
     height: 50px;
     text-align: center;
-    
+}
+
+@media (max-width: 768px) {
+  footer {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+    font-size: 14px;
+    text-align: center;
+  }
 }
