@@ -13,19 +13,19 @@ const Login = () => {
         <form className="form-login">
           <div className="form-group">
             <label htmlFor="username">Nome</label>
-            <input className="user" type="email" id="username" name="username"/>
+            <input className="user" type="email" id="username" name="username" />
           </div>
 
           <div className="form-group">
             <label htmlFor="senha">Senha</label>
-            <input className="senhaInput" type="password" id="senha" name="senha"/>
+            <input className="senhaInput" type="password" id="senha" name="senha" />
           </div>
 
           <div className="forgot-password">
             <a href="#">Esqueceu a senha?</a>
           </div>
 
-          <Botao nomeDoBotao="Login"/>
+          <Botao nomeDoBotao="Login" />
         </form>
       </section>
     </main>

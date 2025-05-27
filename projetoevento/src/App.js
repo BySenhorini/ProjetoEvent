@@ -1,9 +1,9 @@
 import './App.css';
-import Routes from "./Routes/routes"
+// src/App.jsx
+import Rotas from "./Routes/routes";
 
 function App() {
-  return (
-    <Routes/>
-  );
+  return <Rotas />;
 }
+
 export default App;

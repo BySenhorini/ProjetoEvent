@@ -1,15 +1,15 @@
 body {
-    font-family: "Poppins", sans-serif; 
-  }
+  font-family: "Poppins", sans-serif;
+}
 
-footer{
-    background-color:#FFFFFF ;
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-    text-align: center;
+footer {
+  background-color: #FFFFFF;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  text-align: center;
 }
 
 @media (max-width: 768px) {
