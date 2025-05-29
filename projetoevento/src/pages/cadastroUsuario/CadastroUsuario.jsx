@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import api from "../../Services/services";
+import api from "../../Services/Services";
 import Cadastro from "../../components/cadastro/Cadastro";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
@@ -138,7 +138,7 @@ const CadastroTipoUsuario = () => {
                 <Cadastro
                     placeholder="Nome"
                     visibilidade="none"
-                    titulo_cadastro = "Cadastro de Usuário"
+                    titulo_cadastro="Cadastro de Usuário"
                     imagem={Imagem}
                     funcCadastro={cadastrarTU}
                     setValorInput={setTipoUsuario}

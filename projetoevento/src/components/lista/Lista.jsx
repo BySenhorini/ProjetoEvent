@@ -1,33 +1,60 @@
-import './Lista.css';
-import Lixo from "../../assets/img/lixo.png"
-import Caneta from "../../assets/img/lapis.png"
+import "./Lista.css"
+import Editar from "../../assets/img/lapis.png"
+import Detalhes from "../../assets/img/descricao.png"
+import Excluir from "../../assets/img/lixo.png"
 
 const Lista = (props) => {
   return (
     <section className="listagem">
-      <h1>{props.titulo_lista}</h1>
+      <h1>{props.titulo}</h1>
       <hr />
 
       <div className="tabela">
         <thead>
-          <tr className="tabela_cabecalho">
-            <th>Título</th>
-            <th>{props.nome_titulo}</th>
+          <tr className="table_cabecalho">
+            <th>{props.tituloEvento}</th>
+            <th style={{ display: props.visibilidade }}>Data Evento</th>
+            <th style={{ display: props.visibilidade }}>Tipo Evento</th>
             <th>Editar</th>
-            <th>Deletar</th>
+            <th>Excluir</th>
+            <th style={{ display: props.visibilidade }}>Descrição</th>
           </tr>
         </thead>
-        <tbody>
-          <tr className="item_lista">
-            <td data-cell="Título">{props.titulo_item_lista}</td>
-            <td>{props.titulo_item_lista2}</td>
-            <td data-cell="Editar"><img src={Caneta} alt="Imagem de uma caneta" /></td>
-            <td data-cell="Excluir"><img src={Lixo} alt="ícone deletar" /></td>
-          </tr>
-        </tbody>
+        {props.lista && props.lista.length > 0 ? (
+          props.lista.map((item) => (
+            <tbody>
+              <tr className="item_lista" key={props.tipoLista == "tiposEventos" ? item.idTipoEvento : (props.tipoLista == "tipoUsuarios" ? item.idTipoUsuario : item.idEvento)}>
+                <td data-cell="Nome" >
+                  {props.tipoLista == "tiposEventos" ? item.tituloTipoEvento : (props.tipoLista == "tipoUsuarios" ? item.tituloTipoUsuario : item.nomeEvento)}
+                </td>
+                <td data-cell="Data" style={{ display: props.visibilidade }}>
+                  {item.dataEvento}
+                </td>
+                <td data-cell="Evento">{item.tiposEvento?.tituloTipoEvento}</td>
+                <td data-cell="Editar">
+                  <img src={Editar} alt="Imagem de uma caneta" onClick={() => { props.funcEditar(item) }} style={{ cursor: "pointer" }} />
+                </td>
+                <td data-cell="Excluir">
+                  <img src={Excluir} alt="Lixeira" onClick={() => (props.funcExcluir(item))} style={{ cursor: "pointer" }} />
+                </td>
+                <td data-cell="Descrição" style={{ display: props.visibilidade }}>
+                  <img
+                    src={Detalhes}
+                    alt="Detalhes"
+                    onClick={() => (props.descricao(item))}
+                    style={{ cursor: "pointer" }} />
+                </td>
+              </tr>
+            </tbody>
+          ))
+        ) :
+          (
+            <p>Nenhum Tipo de Evento Encontrado.</p>
+          )
+        }
       </div>
     </section>
-  );
-};
+  )
+}
 
 export default Lista;
