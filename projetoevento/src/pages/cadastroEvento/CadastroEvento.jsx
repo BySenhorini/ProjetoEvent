@@ -12,7 +12,6 @@ const CadastroTipoEvento = () => {
     const [TipoEvento, setTipoEvento] = useState("");
     const [listaTE, setListaTE] = useState([])
 
-    //PARTE DO ALERTA
     function alertar(icone, mensagem) {
         const Toast = Swal.mixin({
             toast: true,
@@ -30,15 +29,15 @@ const CadastroTipoEvento = () => {
             title: mensagem
         });
     }
-    //FIM DA PARTE DO ALERTA
+
 
     async function cadastrarTE(evt) {
         evt.preventDefault();
-        //Verificar se o input esta vindo vazio
+        
         if (TipoEvento.trim() !== "") {
-            // alert("O campo prescisa estar preenchido")
+
             try {
-                //cadastrar um tipo usuario: post
+               
                 await api.post("TipoEvento", { tituloTipoEvento: TipoEvento });
                 alertar("success", "Cadastro realizado com sucesso! 🎉")
                 setTipoEvento()
@@ -58,7 +57,7 @@ const CadastroTipoEvento = () => {
 
     async function listarTE() {
         try {
-            //await -> Aguarde ter uma resposta da solitação
+       
             const resposta = await api.get("TipoEvento");
             setListaTE(resposta.data)
             // console.log(resposta.data)
@@ -70,7 +69,7 @@ const CadastroTipoEvento = () => {
 
     async function deletarTipoEvento(tipoEventoId) {
 
-        //COMEÇO DO ALERTA
+      
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
                 confirmButton: "btn btn-success",
@@ -89,7 +88,7 @@ const CadastroTipoEvento = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    //deletar um genero: delete
+          
                     await api.delete(`TipoEvento/${tipoEventoId.idTipoEvento}`);
                     alertar("success", "Tipo de evento deletado com sucesso! 💣")
                     swalWithBootstrapButtons.fire({
@@ -105,7 +104,7 @@ const CadastroTipoEvento = () => {
                     console.log(error);
                 }
             } else if (
-                /* Read more about handling dismissals below */
+               
                 result.dismiss === Swal.DismissReason.cancel
             ) {
                 swalWithBootstrapButtons.fire({
@@ -136,7 +135,7 @@ const CadastroTipoEvento = () => {
                 await api.put(`TiposUsuarios/${idTipoEvento.tipoEventoID}`,
                     { tituloTipoEvento: novoTipoEvento })
                 Swal.fire(`O tipo de usuario modificado é: ${novoTipoEvento}`);
-               
+
                 setTipoEvento()
                 listarTE();
 
@@ -156,13 +155,16 @@ const CadastroTipoEvento = () => {
             <Header />
             <main>
                 <Cadastro
-                    placeholder="titulo"
-                    visibilidade="none"
-                    titulo_cadastro = "Cadastro Tipo de Evento"
-                     imagem={Imagem}
                     funcCadastro={cadastrarTE}
                     setValorInput={setTipoEvento}
                     inputValor={TipoEvento}
+
+                    titulo_cadastro="Cadastro de Evento"
+                    nomes="Título"
+                    visibilidade="none"
+                    imagem={Imagem}
+
+                    textoBotao="Cadastrar"
 
                 />
                 <Lista
@@ -172,9 +174,7 @@ const CadastroTipoEvento = () => {
                     visiComentario="none"
                     tipoLista="TipoEvento"
                     funcExcluir={deletarTipoEvento}
-                    tipoDeTitulo=" "
                     funcEditar={editarTE}
-
 
 
                 />

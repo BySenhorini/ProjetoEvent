@@ -138,20 +138,19 @@ const CadastroTipoUsuario = () => {
                 <Cadastro
                     placeholder="Nome"
                     visibilidade="none"
-                    titulo_cadastro = "Cadastro Tipo Usuário"
+                    titulo_cadastro = "Cadastro de Usuário"
                     imagem={Imagem}
                     funcCadastro={cadastrarTU}
                     setValorInput={setTipoUsuario}
                     inputValor={TiposUsuarios}
                 />
                 <Lista
-                    titulo_lista="Lista Tipo de Usuário"
+                    titulo_lista="Lista de Usuário"
                     lista={listaTipoUsuario}
                     visiAlternativa="none"
                     visiComentario="none"
                     tipoLista="TiposUsuarios"
                     funcExcluir={deletarTipoUsuario}
-                    tipoDeTitulo="Lista de Usuarios"
                     funcEditar={editarTipoUsuario}
                 />
             </main>

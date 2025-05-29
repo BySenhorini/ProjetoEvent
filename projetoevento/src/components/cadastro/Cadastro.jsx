@@ -50,11 +50,49 @@ const Cadastro = (props) => {
                                 value={formData.nome}
                                 onChange={handleChange}
                             />
+                         </div>
+                         {/* <div className="campo_cad_nome">
+                            <input style={{ display: props.visibilidade }}
+                                type="date"
+                                value={props.valorInputData}
+                                onChange={(e) => props.setValorInputData(e.target.value)} />
                         </div>
+                        <div className="campo_cad_genero" style={{ display: props.visibilidadeTipoEvento }}>
+                            <select name="tipoEvento"
+                                value={props.valorSelectTipoEvento}
+                                onChange={(e) => props.setValorSelectTipoEvento(e.target.value)}>
+                                <option disabled selected>Tipo Evento</option>
+                                {props.lista &&
+                                    props.lista.map((itemTipoEvento, index) => (
+                                        <option key={index} value={itemTipoEvento.titulo_cadastro}>
+                                            {itemTipoEvento.titulo_cadastro}
+                                        </option>
+                                    ))}
+                            </select>
+                        </div>
+
+                        <div className="campo_cad_genero" style={{ display: props.visibilidadeInstituicao }}>
+                            <select name="instituicao"
+                                value={props.valorSelectInstituicao}
+                                onChange={(e) => props.setValorSelectInstituicao(e.target.value)}>
+                                <option disabled selected>Instituições</option>
+                                {props.listaInstituicoes && props.listaInstituicoes.map((instituicao, index) =>
+                                (<option key={index} value={instituicao.nome}>
+                                    {instituicao.nome}
+                                </option>))}
+                            </select>
+                        </div> */} 
+                        {/* <div className="campo_cad_nome">
+                            <input type="text"
+                                placeholder={props.campo_descricao}
+                                value={props.valorInputDescricao}
+                                style={{ display: props.visibilidadeDescricao }}
+                                onChange={(e) => props.setValorText(e.target.value)} />
+                        </div>   */}
 
                         {props.exibir_tipo_evento && (
                             <div className="campo_tipo_evento">
-                                <label htmlFor="tipoEvento">Tipo de Evento:</label>
+                                <label htmlFor="tipoEvento">:</label>
                                 <select
                                     name="tipoEvento"
                                     id="tipoEvento"
@@ -85,22 +123,22 @@ const Cadastro = (props) => {
                                     value={formData.instituicao}
                                     onChange={handleChange}
                                 >
-                                    <option value="" disabled>Instituição</option>
-                                    <option value="inst1">SENAI São Caetano do Sul - Informática - Escola Senai "Paulo Antonio Skaf"</option>
+                                    <option value="" disabled>Instituição</option> 
+                        <option value="inst1">SENAI São Caetano do Sul - Informática - Escola Senai "Paulo Antonio Skaf"</option>
 
 
-                                </select>
+                         </select>
 
-                                <hr />
-                            </div>
-                        )}
+                        <hr />
+                        </div> 
+                        )} 
 
                         <Botao nomeDoBotao="Cadastrar" />
                     </div>
                 </div>
             </form>
         </section>
-    );
+        );
 };
 
 export default Cadastro;

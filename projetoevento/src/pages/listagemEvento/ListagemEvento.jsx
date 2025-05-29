@@ -1,43 +1,64 @@
-import { useState } from "react";
-import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
-import Cadastro from "../../components/cadastro/Cadastro";
-import Lista from "../../components/lista/Lista";
-import imagemListarEvento from "../../assets/img/cadastroDeEvento.png";
+import Header from "../../components/header/Header";
+import Imagem from "../../assets/img/balao.png";
+import Toggle from "../../components/toggle/Toggle";
 
-const ListagemEvento = () => {
-    const [eventos, setEventos] = useState([]);
-
-    const cadastrarEvento = (evento) => {
-        setEventos([...eventos, evento]);
-    };
-
+const Listagem = () => {
     return (
         <>
-            <Header />
-            <main>
-                <Cadastro
-                    nametitulo="Tipo Evento"
-                    imagem={imagemListarEvento}
-                    titulo_cadastro="Cadastro de Evento"
-                    nome="Nome"
-                    exibir_tipo_evento={true}
-                    onCadastrar={cadastrarEvento}
-                />
+            <Header/>
+            <section className="listagem">
+                    <h1>Eventos</h1>
+                    <hr className="linha_titulo_eventos" />
 
-                <Lista
-                    nome_titulo="Lista de Eventos"
-                    titulo_item_lista="Nome"
-                    titulo_item_lista2="Tipo Evento"
-                    titulo_lista="Lista de Evento"
-                    visibilidade="none"
-                    itens={eventos}
-                />
-            </main>
+                <div className="tabela_listagem layout_grid">
+
+                <div className="left seletor">
+                    <label htmlFor="eventos"></label>
+                    <select name="eventos" id="">
+                        <option value="" disabled selected>Todos os eventos</option>
+                        <option value="">Evento 1</option>
+                        <option value="">Evento 2</option>
+                        <option value="">Evento 3</option>
+                    </select>
+                </div>
+                    <table>
+                        <thead>
+                            <tr className="cabecalho_listagem ">
+                                <th className="left">Título</th>
+                                <th className="left">Tipo Evento</th>
+                                <th className="right">Comentários</th>
+                                <th className="right">Participar</th>
+                            </tr>
+                        </thead>
+        
+                        <tbody>
+                            <tr className="item_listagem espaco">
+                                <td className="left" data-cell="Título">xxxxxxxxx</td>
+                                <td className="left" data-cell="Tipo Evento">xxxxxxxxx</td>
+                                <td className="right" data-cell="Comentários"><img src={Imagem} alt="" /></td>
+                                <td className="right" data-cell="Participar"><Toggle/></td>
+                            </tr>
+
+                        </tbody>
+
+                        <tbody>
+                            <tr className="item_listagem separa">
+                                <td className="left" data-cell="Título">xxxxxxxxx</td>
+                                <td className="left" data-cell="Tipo Evento">xxxxxxxxx</td>
+                                <td className="right" data-cell="Comentários"><img src={Imagem} alt="" /></td>
+                                <td className="right" data-cell="Participar"><Toggle/></td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
             <Footer />
         </>
     );
-};
+}
 
-export default ListagemEvento;
-
+export default Listagem;
