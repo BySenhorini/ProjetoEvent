@@ -1,39 +1,36 @@
-import Logo from "../../assets/img/logo1.svg"
-import Fundo from "../../assets/img/portaBranca.png"
-import "./Login.css"
+import "./Login.css";
+import login from "../../assets/img/login.png";
 import Botao from "../../components/botao/Botao";
+import Logo from "../../assets/img/logo1.svg";
 
 const Login = () => {
-  return (
-    <main className="main_login">
-      <div className="banner">
-        <img src={Fundo} alt="Fundo banner" />
-      </div>
+    return (
+        <main className="main_login">
+            <div className="banner">
 
-      <section className="section_login">
-        <form action="" className="form_login">
-          <img src={Logo} alt="Logo do projeto Event" />
-
-          <div className="campos_login">
-            <div className="campo_input">
-              <label htmlFor="username"></label>
-              <input type="username" name="username" placeholder="Username"></input>
+                <img src={login} alt="imagem login" />
             </div>
-            <div className="campo_input">
-              <label htmlFor="password"></label>
-              <input type="password" name="password" placeholder="Password"></input>
-            </div>
-          </div>
-
-          <a href="">Esqueceu a senha?</a>
-
-          <Botao nomeDoBotao="Login" />
-
-        </form>
-      </section>
-
-    </main>
-  );
+            <section className="section_login">
+                <img src={Logo} alt="Logo Event" />
+                <form action="" className="form_login">
+                    <div className="campo_login">
+                        <div className="campo_input">
+                            <label htmlFor="UserName"></label>
+                            <input type="UserName" name="Username" placeholder="Username" />
+                        </div>
+                        <div className="campo_input">
+                            <label htmlFor="password"></label>
+                            <input type="password" name="password" placeholder="Password" />
+                        </div>
+                    </div>
+                    <div className="link_senha">
+                        <a href="">Esqueceu a senha?</a>
+                    </div>
+                    <Botao nomeDoBotao="Login" />
+                </form>
+            </section>
+        </main>
+    )
 }
 
 export default Login;

@@ -1,26 +1,29 @@
-import "./Header.css"
-import Logo from "../../assets/img/logo1.svg"
-import Logo_adm from "../../assets/img/Vector (13).png"
-
+import "./Header.css";
+import Logo from "../../assets/img/logo1.svg";
+import { Link } from "react-router-dom"
+import Porta from "../../assets/img/portaSaida.png"
 
 const Header = (props) => {
     return (
         <header>
             <div className="layout_grid cabecalho">
-                <img src={Logo} alt="Logo Evento" />
+                <Link to="/">
+                    <img src={Logo} alt="Logo do Event Plus" />
+                </Link>
                 <nav className="nav_header">
-                    <a href="" className="link_header">Home</a>
-                    <a href="" className="link_header">Eventos</a>
-                    <a href="" className="link_header" style = {{display:props.visibilHeader}}>Usuários</a>
-                    <a href="" className="link_header">Contatos</a>
+                    <Link className="link_header" to="/Home">Home</Link>
+                    <Link className="link_header" to="/TipoEvento">Eventos</Link>
+                    <Link className="link_header" to="/TipoUsuario">Usuarios</Link>
+                    <Link className="link_header" to="/Contatos">Contatos</Link>
+                    <Link className="link_header" to="/Administrador">{props.adm}</Link>
+                    <Link to="/">
+                    <img src={Porta} alt="Imagem de porta"/>
+                    </Link>
                 </nav>
-                <button className="botao_home" style = {{display:props.visibilBotao}}>Logar</button>
-                <div className="Adm">
-                    <a href="" className="link_header" style = {{display:props.visibilHeader}}>{props.admHeader}</a>
-                    <img src={Logo_adm} alt="Vetor" />
-                </div>
+
 
             </div>
+
         </header>
     )
 }

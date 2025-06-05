@@ -1,11 +1,10 @@
+
 .botao{
     width: 300px;
-    height: 35px;
+    height: 40px;
     border: none;
     cursor: pointer;
-    background-color: #B51D44;
+    background-color: #d03e5b;
     color: white;
-    border-radius: 6px ;
-    /* Negrito */
-    font-weight: bolder;
+    border-radius: 6px;
 }
