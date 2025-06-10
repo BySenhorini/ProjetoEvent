@@ -1,105 +1,128 @@
+//Importar as imagens:
+import Comentario from "../../assets/img/balao2.svg"
+import Descricao from "../../assets/img/informacoes.svg"
+
+//import css:
 import "./ListagemEvento.css"
-import descricao from "../../assets/img/informacoes.svg";
-import api from "../../Services/Services";
-import { useEffect, useState } from "react";
+
+//importando hooks:
+import { useEffect, useState } from "react"
+
+//importando o services:
+import api from "../../Services/Services"
+
 import { format } from "date-fns";
 import Modal from "../../components/modal/Modal"
-import Comentario from "../../assets/img/balao2.svg";
-import fecharModal from "../../components/modal/Modal";
-import Swal from "sweetalert2";
+
+import Swal from 'sweetalert2'
 
 const ListagemEvento = () => {
 
     const [listaEventos, setListaEventos] = useState([]);
-    const [tipoModal, setTipoModal] = useState(""); //"descriçãoEvento" ou "Comentário"
-    const [dadosModal, setDadosModal] = useState({});
+
+
+    const [tipoModal, setTipoModal] = useState("");  
+    const [dadosModal, setDadosModal] = useState({}); 
     const [modalAberto, setModalAberto] = useState(false);
-    const [usuarioId, setUsuarioId] = useState("3FA85F64-5717-4562-B3FC-2C963F66AFA6")
+
     const [filtroData, setFiltroData] = useState(["todos"]);
 
-    async function listarEvento() {
-        try {
-            const resposta = await api.get("Eventos")
-            const todosOsEventos = resposta.data;
+    const [usuarioId, setUsuarioId] = useState("817B69EB-ECFE-4E39-B872-F2871AF79756")
 
+    async function listarEventos() {
+        try {
+       
+            const resposta = await api.get("Eventos");
+            const todosOsEventos = resposta.data;
 
             const respostaPresenca = await api.get("PresencasEventos/ListarMinhas/" + usuarioId)
             const minhasPresencas = respostaPresenca.data;
 
-            const eventosComPresenca = todosOsEventos.map((atualEvento) => {
-                const presenca = minhasPresencas.find(p => p.idEvento === atualEvento.idEvento)
-                return {//as informacoes tanto de eventos quanto de eventos
-                    ...atualEvento, //mantem os dados originais do evento atual
+            const eventosComPresencas = todosOsEventos.map((atualEvento) => {
+                const presenca = minhasPresencas.find(p => p.idEvento === atualEvento.idEvento);
+
+                return {
+                    //AS INFORMACOES TANTO DE EVENTOS QUANTO DE EVENTOS QUE POSSUEM PRESENCA
+                    ...atualEvento,// Mantém os dados originais do evento atual
                     possuiPresenca: presenca?.situacao === true,
                     idPresenca: presenca?.idPresencaEvento || null
                 }
-
-
             })
-            setListaEventos(eventosComPresenca);
-            console.log(resposta.data);
+
+            setListaEventos(eventosComPresencas);
+
+            console.log(`Informacoes de todos os eventos:`);
+            console.log(todosOsEventos);
+
+            console.log(`Informacoes de eventos com presenca:`);
+            console.log(minhasPresencas);
+
+            console.log(`Informacoes de todos os eventos com presenca:`);
+            console.log(eventosComPresencas);
 
         } catch (error) {
             console.log(error);
         }
-
     }
 
     useEffect(() => {
-        listarEvento();
+        listarEventos();
     }, [])
 
     function abrirModal(tipo, dados) {
-        setTipoModal("");
-        setDadosModal({});
-        setModalAberto(true);
+        //tipo de modal
+        //dados
+        setModalAberto(true)
+        setTipoModal(tipo)
+        setDadosModal(dados)
     }
+
     function fecharModal() {
-        setTipoModal("");
+        setModalAberto(false);
         setDadosModal({});
-        setModalAberto(true);
-
-
+        setTipoModal("");
     }
+
     async function manipularPresenca(idEvento, presenca, idPresenca) {
         try {
             if (presenca && idPresenca != "") {
-                await api.put(`PresencasEventos/${idPresenca}`, { situacao: false })
                 //atualizacao: situacao para FALSE
-                Swal.fire(`Removido!`, `Sua presenca foi removida`, `success`);
-
+                await api.put(`PresencasEventos/${idPresenca}`, { situacao: false });
+                Swal.fire('Removido!', 'Sua presença foi removida.', 'success');
             } else if (idPresenca != "") {
-                await api.put(`PresencasEventos/${idPresenca}`, { situacao: true });
-                Swal.fire(`Confirmado!`, `Sua presenca foi confirmada`, `success`);
                 //atualizacao: situacao para TRUE
-
+                await api.put(`PresencasEventos/${idPresenca}`, { situacao: true });
+                Swal.fire('Confirmado!', 'Sua presença foi confirmada.', 'success');
             } else {
-                await api.post("PresencasEventos", { situacao: true, idUsuario: usuarioId, idEvento: idEvento });
-                Swal.fire(`Confirmado!`, `Sua presenca foi confirmada`, `success`);
                 //cadastrar uma nova presenca
-
+                await api.post("PresencasEventos", { situacao: true, idUsuario: usuarioId, idEvento: idEvento });
+                Swal.fire('Confirmado!', 'Sua presença foi confirmada.', 'success');
             }
-            listarEvento()
+            listarEventos()
         } catch (error) {
-            console.log(error);
-
+            console.log(error)
         }
     }
+
     function filtrarEventos() {
         const hoje = new Date();
 
         return listaEventos.filter(evento => {
             const dataEvento = new Date(evento.dataEvento);
+
             if (filtroData.includes("todos")) return true;
-            if (filtroData.includes("passados")  && dataEvento > hoje) return true;
-            if(filtroData.includes("futuros")  && dataEvento < hoje) return true;
+            if (filtroData.includes("futuros") && dataEvento > hoje) return true;
+            if (filtroData.includes("passados") && dataEvento < hoje) return true;
 
             return false;
         });
     }
 
+
     return (
         <>
+            {/* Aqui vc vai chamar o header */}
+            {/* Começando a listagem: */}
             <main className="main_lista_eventos layout-grid">
                 <div className="titulo">
                     <h1>Eventos</h1>
@@ -108,79 +131,77 @@ const ListagemEvento = () => {
 
                 <select onChange={(e) => setFiltroData([e.target.value])}>
                     <option value="todos" selected>Todos os eventos</option>
-                    <option value="futuros" selected>Somente passados</option>
-                    <option value="passados">Somente futuros</option>
+                    <option value="futuros">Somente futuros</option>
+                    <option value="passados">Somente passados</option>
                 </select>
 
                 <table className="tabela_lista_eventos">
                     <thead>
                         <tr className="th_lista_eventos">
-                            <th>Titulo</th>
-                            <th>Data Evento</th>
-                            <th>Comentarios</th>
+                            <th>Título</th>
+                            <th>Data do Evento</th>
+                            <th>Tipo Evento</th>
+                            <th>Descrição</th>
+                            <th>Comentários</th>
                             <th>Participar</th>
                         </tr>
                     </thead>
                     <tbody>
                         {listaEventos.length > 0 ? (
-                            filtrarEventos() && filtrarEventos().map((item) => (
+                             filtrarEventos() && filtrarEventos().map((item) => (
                                 <tr>
                                     <td>{item.nomeEvento}</td>
-                                    <td>{format(item.dataEvento, "dd/MM//yy")}</td>
-                                    <td>{item.TiposEventos.tituloTipoEvento}</td>
-
-                                    <td
-                                        data-cell="Descrição">
-
-                                        <img src={descricao}
-                                            alt="Balão de descrição"
-                                            style={{ cursor: "pointer" }}
-                                            onClick={() => abrirModal("descricaoEvento", { descricao: item.descricao })}
-                                        />
+                                    <td>{format(item.dataEvento, "dd/MM/yy")}</td>
+                                    <td>{item.tiposEvento.tituloTipoEvento}</td>
+                                    <td>
+                                        <button className="icon" onClick={() => abrirModal("descricaoEvento", { descricao: item.descricao })}>
+                                            <img src={Descricao} alt="" />
+                                        </button>
                                     </td>
-                                    <td
-                                        data-cell="Comentario">
-
-                                        <img src={Comentario}
-                                            alt="Balão de comentário"
-                                            style={{ cursor: "pointer" }}
-                                            onClick={() => abrirModal("cometarios", { idEvento: item.idEvento })}
-                                        />
+                                    <td>
+                                        <button className="icon" onClick={() => abrirModal("comentarios", { idEvento: item.idEvento })}>
+                                            <img src={Comentario} alt="" />
+                                        </button>
                                     </td>
                                     <td>
                                         <label className="switch">
-                                            <input type="checkbox"
+                                            <input
+                                                type="checkbox"
                                                 checked={item.possuiPresenca}
-                                                onChange={() => manipularPresenca(item.idEvento, item.possuiPresenca, item.idPresenca)} />
+                                                onChange={() =>
+                                                    manipularPresenca(item.idEvento, item.possuiPresenca, item.idPresenca)
+                                                } />
                                             <span className="slider"></span>
                                         </label>
-                                    </td>
 
+                                    </td>
                                 </tr>
                             ))
                         ) : (
-                            <p>Não tem nenhum evento cadastrado</p>
-                        )
-                        }
-
+                            <p>Não existe eventos cadastrados.</p>
+                        )}
                     </tbody>
                 </table>
             </main>
+            {/* Aqui vc vai chamar o footer */}
+
             {modalAberto && (
                 <Modal
-                    titulo={tipoModal == "descricaoEvento" ? "Descrição do evento" : "Comentário"}
-                    tipoModal={tipoModal}
+                    titulo={tipoModal === "descricaoEvento" ? "Descrição do evento" : "Comentário"}
+                    //estou verificando qual é o tipo de modal!
+                    tipoModel={tipoModal}
 
                     idEvento={dadosModal.idEvento}
+
                     descricao={dadosModal.descricao}
+
                     fecharModal={fecharModal}
-
                 />
-
             )}
         </>
-
     )
 }
 
 export default ListagemEvento;
+
+//Atalho para criar o componente-> rafce

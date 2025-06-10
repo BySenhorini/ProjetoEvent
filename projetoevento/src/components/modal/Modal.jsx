@@ -1,46 +1,60 @@
-import ImgDeletar from "../../assets/img/lixoVermelho.svg"
-import "./Modal.css";
-import { constructFromSymbol } from 'date-fns/constants';
-import api from '../../Services/Services'
 import { useEffect, useState } from "react";
+
+import ImgDeletar from "../../assets/img/excluir.png";
+
+import "./Modal.css";
+
+import api from "../../Services/Services";
+
 const Modal = (props) => {
 
     const [comentarios, setComentarios] = useState([]);
-    const[novoComentario, setNovoComentario] = useState("");
-    const [usuarioId, setUsuarioId] = useState("3FA85F64-5717-4562-B3FC-2C963F66AFA6")
+
+    const [novoComentario, setNovoComentario] = useState("");
+
+    const [usuarioId, setUsuarioId] = useState("817B69EB-ECFE-4E39-B872-F2871AF79756")
+
 
     async function listarComentarios() {
         try {
-            const resposta = await api.get(`ComentariosEventos/ListarSomenteExibe?id=${props.idEvento}`)
+            const resposta = await api.get(`ComentariosEventos/ListarSomenteExibe?id=${props.idEvento}`);
 
-            setComentarios(resposta.data)
+            setComentarios(resposta.data);
+
+            console.log(resposta.data);
+            
+
         } catch (error) {
             console.log(error);
+            
         }
-
     }
 
     useEffect(() => {
         listarComentarios();
-    }, []);
+    }, [comentarios])
 
-    async function cadastrarComentario(comentario) {
+    async function cadastrarComentario(comentario) {        
         try {
-            await api.post("ComentariosEventos", {idUsuario: usuarioId  , idEvento: props.idEvento ,  descricao: comentario})
-            
+            await api.post("ComentariosEventos",{
+                idUsuario: usuarioId , 
+                idEvento: props.idEvento, 
+                descricao: comentario})
         } catch (error) {
-            console.log(error);
-            
+            console.error(error);
         }
-        
     }
+
     async function deletarComentario(idComentario) {
-        try {
-            await api.delete(`ComentariosEventos/${idComentario}`)
+         try {
+            await api.delete(`ComentariosEventos/${idComentario}`);
         } catch (error) {
             console.log(error)
         }
     }
+
+
+
 
     return (
         <>
@@ -55,15 +69,16 @@ const Modal = (props) => {
                             {comentarios.map((item) => (
                                 <div key={item.idComentarioEvento}>
                                     <strong>{item.usuario.nomeUsuario}</strong>
-                                    <img src={ImgDeletar} alt="Deletar" onClick={() => deletarComentario (item.idComentarioEvento)}/>
+                                    <img src={ImgDeletar} alt="Deletar" 
+                                     onClick={() => deletarComentario(item.idComentarioEvento)}/>
                                     <p>{item.descricao}</p>
                                     <hr />
                                 </div>
                             ))}
                             <div>
-                                <input type="text" placeholder="Escreva seu comentário"
+                                <input type="text" placeholder="Escreva seu comentário..." 
                                 value={novoComentario}
-                                onChange={(e) =>setNovoComentario(e.target.value)} />
+                                onChange={(e)=>setNovoComentario(e.target.value)}/>
                                 <button onClick={() => cadastrarComentario(novoComentario)}>
                                     Cadastrar
                                 </button>
@@ -73,7 +88,7 @@ const Modal = (props) => {
                 </div>
             </div>
         </>
-    );
-};
+    )
+}
 
-export default Modal;
+export default Modal
