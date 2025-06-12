@@ -41,6 +41,7 @@
     border-radius: 50%;
     transition: 0.4s;
 }
+
 input:checked+.slider {
     background-color: #B51D44;
     /* cor ligado */
@@ -60,4 +61,3 @@ input:checked+.slider::before {
 input:checked+.slider::before {
     transform: translateY(-50%) translateX(26px);
 }
-

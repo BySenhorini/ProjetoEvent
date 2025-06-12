@@ -55,18 +55,18 @@
 
     border-left: none;
     outline: none;
-    border-right:none ;
+    border-right: none;
     border-top: none;
     border-color: rgb(184, 182, 182);
-   
+
 }
 
-.section_login img{
+.section_login img {
     width: 170px;
     margin-bottom: 90px;
 }
 
-.link_senha a{
+.link_senha a {
     color: rgb(165, 161, 161);
     font-size: small;
 }

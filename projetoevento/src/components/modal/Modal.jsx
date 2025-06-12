@@ -12,7 +12,7 @@ const Modal = (props) => {
 
     const [novoComentario, setNovoComentario] = useState("");
 
-    const [usuarioId, setUsuarioId] = useState("817B69EB-ECFE-4E39-B872-F2871AF79756")
+    const [usuarioId, setUsuarioId] = useState("f46c65c6-cc8d-4934-8334-a3f564a99970")
 
 
     async function listarComentarios() {
@@ -22,11 +22,11 @@ const Modal = (props) => {
             setComentarios(resposta.data);
 
             console.log(resposta.data);
-            
+
 
         } catch (error) {
             console.log(error);
-            
+
         }
     }
 
@@ -34,19 +34,20 @@ const Modal = (props) => {
         listarComentarios();
     }, [comentarios])
 
-    async function cadastrarComentario(comentario) {        
+    async function cadastrarComentario(comentario) {
         try {
-            await api.post("ComentariosEventos",{
-                idUsuario: usuarioId , 
-                idEvento: props.idEvento, 
-                descricao: comentario})
+            await api.post("ComentariosEventos", {
+                idUsuario: usuarioId,
+                idEvento: props.idEvento,
+                descricao: comentario
+            })
         } catch (error) {
             console.error(error);
         }
     }
 
     async function deletarComentario(idComentario) {
-         try {
+        try {
             await api.delete(`ComentariosEventos/${idComentario}`);
         } catch (error) {
             console.log(error)
@@ -69,16 +70,16 @@ const Modal = (props) => {
                             {comentarios.map((item) => (
                                 <div key={item.idComentarioEvento}>
                                     <strong>{item.usuario.nomeUsuario}</strong>
-                                    <img src={ImgDeletar} alt="Deletar" 
-                                     onClick={() => deletarComentario(item.idComentarioEvento)}/>
+                                    <img src={ImgDeletar} alt="Deletar"
+                                        onClick={() => deletarComentario(item.idComentarioEvento)} />
                                     <p>{item.descricao}</p>
                                     <hr />
                                 </div>
                             ))}
                             <div>
-                                <input type="text" placeholder="Escreva seu comentário..." 
-                                value={novoComentario}
-                                onChange={(e)=>setNovoComentario(e.target.value)}/>
+                                <input type="text" placeholder="Escreva seu comentário..."
+                                    value={novoComentario}
+                                    onChange={(e) => setNovoComentario(e.target.value)} />
                                 <button onClick={() => cadastrarComentario(novoComentario)}>
                                     Cadastrar
                                 </button>

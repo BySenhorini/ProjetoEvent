@@ -17,7 +17,7 @@ const Header = (props) => {
                     <Link className="link_header" to="/Contatos">Contatos</Link>
                     <Link className="link_header" to="/Administrador">{props.adm}</Link>
                     <Link to="/">
-                    <img src={Porta} alt="Imagem de porta"/>
+                        <img src={Porta} alt="Imagem de porta" />
                     </Link>
                 </nav>
 

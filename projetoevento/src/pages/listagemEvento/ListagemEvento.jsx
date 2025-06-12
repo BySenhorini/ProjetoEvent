@@ -1,80 +1,57 @@
-//Importar as imagens:
-import Comentario from "../../assets/img/balao2.svg"
-import Descricao from "../../assets/img/informacoes.svg"
 
-//import css:
-import "./ListagemEvento.css"
-
-//importando hooks:
-import { useEffect, useState } from "react"
-
-//importando o services:
-import api from "../../Services/Services"
-
+import "./ListagemEvento.css";
+import Header from "../../components/header/Header";
+import Footer from "../../components/footer/Footer";
+import Modal from "../../components/modal/Modal";
+import Swal from "sweetalert2";
+import nuvem from "../../assets/img/balao2.svg";
+import descricao from "../../assets/img/informacoes.svg";
+import api from "../../Services/Services";
+import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import Modal from "../../components/modal/Modal"
-
-import Swal from 'sweetalert2'
+import Toggle from "../../components/toggle/Toggle";
+import { useAuth } from "../../contexts/AuthContexts";
 
 const ListagemEvento = () => {
-
-    const [listaEventos, setListaEventos] = useState([]);
-
-
-    const [tipoModal, setTipoModal] = useState("");  
-    const [dadosModal, setDadosModal] = useState({}); 
+    const [listaEventos, setListaEvento] = useState([]);
+    const [tipoModal, setTipoModal] = useState("");
+    const [dadosModal, setDadosModal] = useState({});
     const [modalAberto, setModalAberto] = useState(false);
-
+    const {usuario} = useAuth();
+    // const [usuarioId, setUsuarioId] = useState("7B53EF89-AFCB-46C9-8BED-80528A8144EA");
     const [filtroData, setFiltroData] = useState(["todos"]);
 
-    const [usuarioId, setUsuarioId] = useState("817B69EB-ECFE-4E39-B872-F2871AF79756")
-
-    async function listarEventos() {
+    async function listarEvento() {
         try {
-       
-            const resposta = await api.get("Eventos");
+            const resposta = await api.get("eventos");
             const todosOsEventos = resposta.data;
-
-            const respostaPresenca = await api.get("PresencasEventos/ListarMinhas/" + usuarioId)
+            const respostaPresenca = await api.get("PresencasEventos/ListarMinhas/" + usuario.idUsuario);
             const minhasPresencas = respostaPresenca.data;
 
             const eventosComPresencas = todosOsEventos.map((atualEvento) => {
                 const presenca = minhasPresencas.find(p => p.idEvento === atualEvento.idEvento);
-
                 return {
-                    //AS INFORMACOES TANTO DE EVENTOS QUANTO DE EVENTOS QUE POSSUEM PRESENCA
-                    ...atualEvento,// Mantém os dados originais do evento atual
+                    ...atualEvento,
                     possuiPresenca: presenca?.situacao === true,
                     idPresenca: presenca?.idPresencaEvento || null
-                }
-            })
+                };
+            });
 
-            setListaEventos(eventosComPresencas);
-
-            console.log(`Informacoes de todos os eventos:`);
-            console.log(todosOsEventos);
-
-            console.log(`Informacoes de eventos com presenca:`);
-            console.log(minhasPresencas);
-
-            console.log(`Informacoes de todos os eventos com presenca:`);
-            console.log(eventosComPresencas);
-
+            setListaEvento(eventosComPresencas);
         } catch (error) {
             console.log(error);
         }
     }
 
     useEffect(() => {
-        listarEventos();
-    }, [])
+        // console.log(usuario.idUsuario);      
+        listarEvento();
+    }, []);
 
     function abrirModal(tipo, dados) {
-        //tipo de modal
-        //dados
-        setModalAberto(true)
-        setTipoModal(tipo)
-        setDadosModal(dados)
+        setTipoModal(tipo);
+        setDadosModal(dados);
+        setModalAberto(true);
     }
 
     function fecharModal() {
@@ -85,22 +62,20 @@ const ListagemEvento = () => {
 
     async function manipularPresenca(idEvento, presenca, idPresenca) {
         try {
-            if (presenca && idPresenca != "") {
-                //atualizacao: situacao para FALSE
+            if (presenca && idPresenca !== "") {
                 await api.put(`PresencasEventos/${idPresenca}`, { situacao: false });
-                Swal.fire('Removido!', 'Sua presença foi removida.', 'success');
-            } else if (idPresenca != "") {
-                //atualizacao: situacao para TRUE
+                Swal.fire('Removido!', 'Sua presença foi removida.', "success");
+            } else if (idPresenca !== "") {
                 await api.put(`PresencasEventos/${idPresenca}`, { situacao: true });
-                Swal.fire('Confirmado!', 'Sua presença foi confirmada.', 'success');
+                Swal.fire('Confirmada!', 'Sua presença foi confirmada.', 'success');
             } else {
-                //cadastrar uma nova presenca
-                await api.post("PresencasEventos", { situacao: true, idUsuario: usuarioId, idEvento: idEvento });
+                await api.post("PresencaEventos", { situacao: true, idUsuario:  usuario.idUsuario, idEvento: idEvento });
                 Swal.fire('Confirmado!', 'Sua presença foi confirmada.', 'success');
             }
-            listarEventos()
+
+            listarEvento();
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
 
@@ -109,99 +84,99 @@ const ListagemEvento = () => {
 
         return listaEventos.filter(evento => {
             const dataEvento = new Date(evento.dataEvento);
-
             if (filtroData.includes("todos")) return true;
             if (filtroData.includes("futuros") && dataEvento > hoje) return true;
             if (filtroData.includes("passados") && dataEvento < hoje) return true;
-
             return false;
         });
     }
 
-
     return (
         <>
-            {/* Aqui vc vai chamar o header */}
-            {/* Começando a listagem: */}
-            <main className="main_lista_eventos layout-grid">
-                <div className="titulo">
+            <Header />
+            <section className="main_lista_eventos layout_grid">
+                <div className="tituloEvento">
                     <h1>Eventos</h1>
                     <hr />
                 </div>
 
-                <select onChange={(e) => setFiltroData([e.target.value])}>
+
+            
+                <select
+                    className="selecaoDeEventos"
+                    onChange={(e) => setFiltroData([e.target.value])}
+                >
                     <option value="todos" selected>Todos os eventos</option>
                     <option value="futuros">Somente futuros</option>
                     <option value="passados">Somente passados</option>
                 </select>
 
-                <table className="tabela_lista_eventos">
-                    <thead>
-                        <tr className="th_lista_eventos">
-                            <th>Título</th>
-                            <th>Data do Evento</th>
-                            <th>Tipo Evento</th>
-                            <th>Descrição</th>
-                            <th>Comentários</th>
-                            <th>Participar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {listaEventos.length > 0 ? (
-                             filtrarEventos() && filtrarEventos().map((item) => (
+                <div className="tabela_lista_eventos">
+                    <table>
+                        <thead>
+                            <tr className="sub_eventos">
+                                <th>Título</th>
+                                <th>Data</th>
+                                <th>Tipo de Evento</th>
+                                <th>Descrição</th>
+                                <th>Comentário</th>
+                                <th>Participar</th>
+                            </tr>
+                        </thead>
+                        <tbody className="corpoListagem">
+                            {listaEventos.length > 0 ? (
+                                filtrarEventos() && filtrarEventos().map((item) => (
+                                    <tr className="listagemDoEvento" key={item.idEvento}>
+                                        <td data-cell="Nome">{item.nomeEvento}</td>
+                                        <td data-cell="Data">{format(item.dataEvento, "dd/MM/yy")}</td>
+                                        <td data-cell="Tipo Evento">{item.tiposEvento.tituloTipoEvento}</td>
+                                        <td data-cell="Descricao">
+                                            <img
+                                                className="imagemListagem"
+                                                style={{ cursor: "pointer" }}
+                                                onClick={() => abrirModal("descricaoEvento", { descricao: item.descricao })}
+                                                src={descricao}
+                                                alt="Descrição"
+                                            />
+                                        </td>
+                                        <td data-cell="Comentários">
+                                            <img
+                                                style={{ cursor: "pointer" }}
+                                                onClick={() => abrirModal("comentarios", { idEvento: item.idEvento })}
+                                                src={nuvem}
+                                                alt="Comentários"
+                                            />
+                                        </td>
+                                        <td data-cell="Participar">
+                                            <Toggle
+                                                presenca={item.possuiPresenca}
+                                                manipular={() => manipularPresenca(item.idEvento, item.possuiPresenca, item.idPresenca)}
+                                            />
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
                                 <tr>
-                                    <td>{item.nomeEvento}</td>
-                                    <td>{format(item.dataEvento, "dd/MM/yy")}</td>
-                                    <td>{item.tiposEvento.tituloTipoEvento}</td>
-                                    <td>
-                                        <button className="icon" onClick={() => abrirModal("descricaoEvento", { descricao: item.descricao })}>
-                                            <img src={Descricao} alt="" />
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button className="icon" onClick={() => abrirModal("comentarios", { idEvento: item.idEvento })}>
-                                            <img src={Comentario} alt="" />
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <label className="switch">
-                                            <input
-                                                type="checkbox"
-                                                checked={item.possuiPresenca}
-                                                onChange={() =>
-                                                    manipularPresenca(item.idEvento, item.possuiPresenca, item.idPresenca)
-                                                } />
-                                            <span className="slider"></span>
-                                        </label>
-
-                                    </td>
+                                    <td colSpan={6}>Nenhum evento encontrado.</td>
                                 </tr>
-                            ))
-                        ) : (
-                            <p>Não existe eventos cadastrados.</p>
-                        )}
-                    </tbody>
-                </table>
-            </main>
-            {/* Aqui vc vai chamar o footer */}
+                            )}
+                        </tbody>
+                    </table>
 
+                </div>
+            </section>
             {modalAberto && (
                 <Modal
                     titulo={tipoModal === "descricaoEvento" ? "Descrição do evento" : "Comentário"}
-                    //estou verificando qual é o tipo de modal!
                     tipoModel={tipoModal}
-
                     idEvento={dadosModal.idEvento}
-
                     descricao={dadosModal.descricao}
-
                     fecharModal={fecharModal}
                 />
             )}
+            <Footer />
         </>
-    )
-}
+    );
+};
 
 export default ListagemEvento;
-
-//Atalho para criar o componente-> rafce
